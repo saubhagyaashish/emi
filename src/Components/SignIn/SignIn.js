@@ -18,12 +18,16 @@ const theme = createTheme();
 
 export default function SignIn() {
   const [{ authUser, setauthUser }] = React.useContext(AuthUserContext);
+  const [showError, setshowError] = React.useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     if (data.get('email') === 'admin@gmail.com' && data.get('password') === "admin") {
       setauthUser(true)
+    }
+    else {
+      setshowError(true)
     }
 
   };
@@ -40,9 +44,13 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          {showError ? <Alert variant="filled" severity="error">
+            Invalid Username or Password!
+          </Alert>: <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar>}
+
+          
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -85,7 +93,7 @@ export default function SignIn() {
         <Alert severity="info">
           <AlertTitle>Info</AlertTitle>
           Email — <strong>admin@gmail.com</strong>
-          <br/>
+          <br />
           Password — <strong>admin</strong>
         </Alert>
       </Container>
