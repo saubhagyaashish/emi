@@ -1,24 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import EmiCalculator from './Components/EmiCalculator/EmiCalculator';
+import EmiHistory from './Components/EmiCalculatorHistory/EmiHistory';
+import { createContext, useState } from 'react';
+import { create } from '@mui/material/styles/createTransitions';
+import SignIn from './Components/SignIn/SignIn';
+
+export const HistoryContext = createContext();
+export const EmiListContext = createContext();
+export const AuthUserContext = createContext();
 
 function App() {
+  const [authUser, setauthUser] = useState(false)
+  const [emisHistory, setEmisHistory] = useState({})
+  const [emiList, seEmiList] = useState([])
+  const values = [{ emisHistory, setEmisHistory }]
+  const listValues = [{ emiList, seEmiList }]
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthUserContext.Provider value={[{ authUser, setauthUser}]}>
+      <HistoryContext.Provider value={values}>
+        <EmiListContext.Provider value={listValues}>
+          { authUser ?
+            <div className='App'>
+              <EmiCalculator />
+              <div className='App-EmiHitory'><EmiHistory /></div>
+
+            </div>: <SignIn/>}
+
+        </EmiListContext.Provider>
+      </HistoryContext.Provider>
+    </AuthUserContext.Provider>
   );
 }
 
