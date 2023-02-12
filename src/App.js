@@ -2,7 +2,6 @@ import './App.css';
 import EmiCalculator from './Components/EmiCalculator/EmiCalculator';
 import EmiHistory from './Components/EmiCalculatorHistory/EmiHistory';
 import { createContext, useState } from 'react';
-import { create } from '@mui/material/styles/createTransitions';
 import SignIn from './Components/SignIn/SignIn';
 
 export const HistoryContext = createContext();
